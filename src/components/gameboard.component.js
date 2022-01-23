@@ -47,12 +47,20 @@ export default class Gameboard extends Component {
     }
 
     updateTile(){
+
+        let word = this.props.word;
+        let wordArr = this.props.wordArr
+
+        console.log(wordArr)
       
         let currentRow = document.getElementsByName('row ' + this.props.row)
         
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
 
         let key = this.props.keyPress;
+        let guess = ''
+        guess = guess + this.props.keyPress
+        console.log(guess)
 
         if (key == null) {
             key = '0'

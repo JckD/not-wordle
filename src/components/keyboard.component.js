@@ -22,11 +22,38 @@ export default class Keyboard extends Component {
             key : '',
             tile : -1,
             del : false,
+            word : '',
+            wordArr : [],
+            guess : '',
+            guessArr : []
         }
     }
 
     componentDidMount() {
 
+        this.pickWord()
+    }
+
+    pickWord() {
+        const words = require('../assets/words.txt');
+
+        fetch(words)
+        .then(res => res.text())
+        .then(text => {
+            const arrayOfWords = text.split(' ')
+            //console.log(arrayOfWords)
+            let rand = Math.floor(Math.random() * arrayOfWords.length);
+            let word = arrayOfWords[rand]
+            //console.log(word)
+            let wordArr = word.split('')
+            
+           this.setState((state) => ({
+                word : word,
+                wordArr : wordArr
+           }))
+        })
+
+        
     }
 
     generateRows() {
@@ -49,55 +76,56 @@ export default class Keyboard extends Component {
 
     }
 
+    compareWords() {
+        let wordArr = this.state.wordArr
+        let guess = this.state.guess
+
+        let guessArr = guess.split('')
+        console.log(guessArr)
+        for(let i = 0; i< wordArr.length; i++) {
+            if (wordArr[i] === guessArr[i]) {
+                console.log('word contains ' + wordArr[i])
+            }
+        }
+            
+        
+    }
+
     keyPress(key){
        // console.log(key)
 
        let currentKey = this.state.key
        let row  = this.state.row
        let currentTile = this.state.tile
+       let guess = this.state.guess
+
 
         if(key === 'Enter') {
-            // this.setState((state) => ({
-            //     row : state.row + 1,
-            //     key : '',
-            //     tile : -1
-            // }), () => console.log(this.state.tile))
+
 
             row = row + 1;
             currentKey = '';
             currentTile = -1;
+            console.log(this.state.guess)
+            this.compareWords()
             this.setState((state) => ({
                 del : false
             }))
 
         } else if (key === 'DEL') {
-            // this.setState((state) => ({
-            //     key : '',
-               
-            // }) , ) 
-            
-           // console.log(currentTile)
            if (this.state.del) {
                currentTile --
            }
-
                 
             currentKey = ''
-                
-            //currentTile -= 1
             
             this.setState((state) => ({
                 del : true
             }))
             
-           // console.log(currentTile)
 
         } else {
-            // this.setState((state) => ({
-            //     key : key, 
-                
-            //     tile : state.tile + 1
-            // }), () => console.log(this.state.tile) ) 
+   
             if(this.state.del) {
                 currentTile--
 
@@ -107,8 +135,9 @@ export default class Keyboard extends Component {
             }
 
             currentKey = key;
+            guess = guess + key
             currentTile += 1
-           // console.log(currentTile)
+
             this.setState((state) => ({
                 del : false
             }))
@@ -121,9 +150,6 @@ export default class Keyboard extends Component {
            
         } else if (currentTile > 4) {
             currentTile = 4
-        } else if ( currentTile === this.state.tile) {
-            console.log('ok')
-            //currentTile --
         }
 
         
@@ -131,7 +157,8 @@ export default class Keyboard extends Component {
             
             key : currentKey,
             tile : currentTile,
-            row : row
+            row : row,
+            guess : guess
         }),)
 
      
@@ -143,14 +170,13 @@ export default class Keyboard extends Component {
     }
 
 
-
     render() {
         let keyPressed = this.state.key
        // console.log(keyPressed)
         return (
             <>
             <div class="board-container">
-                <Gameboard keyPress={this.state.key} row={this.state.row} tile={this.state.tile}/>
+                <Gameboard keyPress={this.state.key} row={this.state.row} tile={this.state.tile} word={this.state.word} wordArr={this.state.wordArr}/>
             </div>
             <div>{this.generateRows()}</div>
             </>
