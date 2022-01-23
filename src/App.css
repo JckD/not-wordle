@@ -6,7 +6,7 @@ html {
 }
 
 .header {
-  border-bottom: 1px solid #3a3a3c;
+ 
 }
 
 .container {
@@ -22,7 +22,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px
+  height: 700px
 }
 
 .keyboard {
