@@ -18,9 +18,10 @@ export default class Keyboard extends Component {
         this.keyPress = this.keyPress.bind(this);
 
         this.state = {
-            row : 0,
-            tile : 0,
+            row : 0,    
             key : '',
+            tile : -1,
+            del : false,
         }
     }
 
@@ -50,32 +51,92 @@ export default class Keyboard extends Component {
 
     keyPress(key){
        // console.log(key)
-        if(key === 'Enter') {
-            this.setState((state) => ({
-                row : state.row + 1,
-                key : '',
-                tile : -1
-            }), () => console.log(this.state.tile))
 
-        } else if (key === 'DEL') {
+       let currentKey = this.state.key
+       let row  = this.state.row
+       let currentTile = this.state.tile
+
+        if(key === 'Enter') {
+            // this.setState((state) => ({
+            //     row : state.row + 1,
+            //     key : '',
+            //     tile : -1
+            // }), () => console.log(this.state.tile))
+
+            row = row + 1;
+            currentKey = '';
+            currentTile = -1;
             this.setState((state) => ({
-                key : '',
-               
-            }) , ) 
-            this.setState((state) => ({
-                tile : state.tile -1
+                del : false
             }))
 
-        } else {
-            this.setState((state) => ({
-                key : key, 
+        } else if (key === 'DEL') {
+            // this.setState((state) => ({
+            //     key : '',
+               
+            // }) , ) 
+            
+           // console.log(currentTile)
+           if (this.state.del) {
+               currentTile --
+           }
+
                 
-                tile : state.tile + 1
-            }), () => console.log(this.state.tile) ) 
+            currentKey = ''
+                
+            //currentTile -= 1
+            
+            this.setState((state) => ({
+                del : true
+            }))
+            
+           // console.log(currentTile)
+
+        } else {
+            // this.setState((state) => ({
+            //     key : key, 
+                
+            //     tile : state.tile + 1
+            // }), () => console.log(this.state.tile) ) 
+            if(this.state.del) {
+                currentTile--
+
+                if (currentTile < 0) {
+                    currentTile = -1
+                }
+            }
+
+            currentKey = key;
+            currentTile += 1
+           // console.log(currentTile)
+            this.setState((state) => ({
+                del : false
+            }))
         }
+
+        if(currentTile < 0) {
+            
+            currentTile = -1
+            console.log('huh')
+           
+        } else if (currentTile > 4) {
+            currentTile = 4
+        } else if ( currentTile === this.state.tile) {
+            console.log('ok')
+            //currentTile --
+        }
+
+        
+        this.setState((state) => ({
+            
+            key : currentKey,
+            tile : currentTile,
+            row : row
+        }),)
 
      
     }
+
 
     generateLetters() {
         return <p>hi</p>

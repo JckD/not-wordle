@@ -17,7 +17,8 @@ export default class Gameboard extends Component {
         this.state = {
             wordLength : 5,
             lives : 6,
-            key : props.keyPress
+            key : props.keyPress,
+            tile : 0
         }
     }
 
@@ -43,11 +44,10 @@ export default class Gameboard extends Component {
                      })}
                    </div>
         })
-
-
     }
 
     updateTile(){
+      
         let currentRow = document.getElementsByName('row ' + this.props.row)
         
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
@@ -55,12 +55,13 @@ export default class Gameboard extends Component {
         let key = this.props.keyPress;
 
         if (key == null) {
-            key = ' 0'
+            key = '0'
         }
-        //console.log(key)
+       // console.log(currentTile.item(0).children[0])
 
         if (currentTile.item(0) != null) {
-           currentTile.item(0).children[0].innerHTML = key 
+            console.log(currentTile.item(0))
+            currentTile.item(0).children[0].innerHTML = key 
         }
        
         
