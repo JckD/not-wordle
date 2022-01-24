@@ -48,12 +48,6 @@ export default class Gameboard extends Component {
 
     updateTile(){
 
- 
-
-        console.log(this.props.correct)
-       
-        
-      
         
         
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
@@ -83,16 +77,15 @@ export default class Gameboard extends Component {
     }
 
     updateRow() {
-        console.log(this.props.row-1)
+       // console.log(this.props.row-1)
         let lastRow = this.props.row-1
         let currentRow = document.getElementsByName('row ' + lastRow)
 
-        console.log(currentRow.item(0))
+        //console.log(currentRow.item(0))
 
         for(let i = 0; i < 5; i++){
-            console.log(this.props.correct[i])
+           // console.log(this.props.correct[i])
             if (this.props.correct[i] === i) {
-                console.log('light')
                 currentRow.item(0).children[i].classList.add('correct')
             } else if (this.props.correct[i] === -2) {
                 currentRow.item(0).children[i].classList.add('almost')

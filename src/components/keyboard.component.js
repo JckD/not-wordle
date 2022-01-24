@@ -78,34 +78,42 @@ export default class Keyboard extends Component {
 
     }
 
-    compareWords() {
+    compareWords(row) {
         let wordArr = this.state.wordArr
         let guess = this.state.guess
 
         let guessArr = guess.split('')
         console.log(guessArr)
-        for(let i = 0; i< wordArr.length; i++) {
 
-            if (wordArr[i] === guessArr[i]) {
-                console.log('word contains ' + wordArr[i])
-
-                this.setState((state) => ({
-                    correct : [...state.correct, i]
-                }))
-
-                
-            } else if (wordArr.includes(guessArr[i])) {
-                this.setState((state) => ({
-                    correct : [...state.correct, -2]
-                }))
-            } else {
-                this.setState((state) =>({
-                    correct : [...state.correct, -1]
-                }))
-            }
-        }
-            
+       
         
+            for(let i = 0; i< wordArr.length; i++) {
+
+                if (wordArr[i] === guessArr[i]) {
+                    console.log('word contains ' + wordArr[i])
+
+                    this.setState((state) => ({
+                        correct : [...state.correct, i]
+                    }))
+
+                    
+                } else if (wordArr.includes(guessArr[i])) {
+                    this.setState((state) => ({
+                        correct : [...state.correct, -2]
+                    }))
+                } else {
+                    this.setState((state) =>({
+                        correct : [...state.correct, -1]
+                    }))
+                }
+            }
+      
+        
+
+    }
+
+    gameOver() {
+        console.log('gameover')
     }
 
     keyPress(key){
@@ -118,15 +126,38 @@ export default class Keyboard extends Component {
 
 
         if(key === 'Enter') {
+   
+           
+            
+            
+          
+           // if (guess.length == 5) {
+                currentKey = '';
+                currentTile = -1;
+                console.log(this.state.guess)
+                if( row  == 6) {
+                    this.gameOver()
+                } else {
+                   row = row + 1; 
+            }
+                
 
+                this.compareWords(row)
+                console.log('new row')
 
-            row = row + 1;
-            currentKey = '';
-            currentTile = -1;
-            console.log(this.state.guess)
-            this.compareWords()
+                if(this.state.row === row) {
+                     this.setState((state) => ({
+                    correct : [], 
+                    guess : ''
+                }))}
+               
+           // }   
+            
+            
             this.setState((state) => ({
-                del : false
+                del : false,
+                // correct : [],
+                // guess : ''
             }))
 
         } else if (key === 'DEL') {
@@ -144,6 +175,9 @@ export default class Keyboard extends Component {
             
 
         } else {
+
+            
+
    
             if(this.state.del) {
                 currentTile--
@@ -154,8 +188,16 @@ export default class Keyboard extends Component {
             }
 
             currentKey = key;
-            guess = guess + key
+            
+            
             currentTile += 1
+            if (guess.length > 5) {
+                guess = guess.substring(guess.length-1, guess.length)
+                this.setState((state) => ({
+                    correct: []
+                }))
+            }
+            guess = guess + key
 
             this.setState((state) => ({
                 del : false
@@ -165,7 +207,6 @@ export default class Keyboard extends Component {
         if(currentTile < 0) {
             
             currentTile = -1
-            console.log('huh')
            
         } else if (currentTile > 4) {
             currentTile = 4
@@ -178,7 +219,11 @@ export default class Keyboard extends Component {
             tile : currentTile,
             row : row,
             guess : guess
-        }),)
+        }), () => console.log('row:' + this.state.row + '  '+row))
+
+        if(this.state.row === row + 1) {
+            console.log('idk')
+            }
 
      
     }
