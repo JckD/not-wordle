@@ -48,19 +48,26 @@ export default class Gameboard extends Component {
 
     updateTile(){
 
-        let word = this.props.word;
-        let wordArr = this.props.wordArr
+ 
 
-        console.log(wordArr)
+        console.log(this.props.correct)
+       
+        
       
-        let currentRow = document.getElementsByName('row ' + this.props.row)
+        
         
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
 
+        let correct = this.props.correct
+        console.log(this.props.tile)
+
+        if(this.props.correct.length > 0) {
+          //  currentTile.item(0).classList.add('correct')
+            this.updateRow()
+        }
+
         let key = this.props.keyPress;
-        let guess = ''
-        guess = guess + this.props.keyPress
-        console.log(guess)
+   
 
         if (key == null) {
             key = '0'
@@ -72,6 +79,25 @@ export default class Gameboard extends Component {
             currentTile.item(0).children[0].innerHTML = key 
         }
        
+        
+    }
+
+    updateRow() {
+        console.log(this.props.row-1)
+        let lastRow = this.props.row-1
+        let currentRow = document.getElementsByName('row ' + lastRow)
+
+        console.log(currentRow.item(0))
+
+        for(let i = 0; i < 5; i++){
+            console.log(this.props.correct[i])
+            if (this.props.correct[i] === i) {
+                console.log('light')
+                currentRow.item(0).children[i].classList.add('correct')
+            } else if (this.props.correct[i] === -2) {
+                currentRow.item(0).children[i].classList.add('almost')
+            }
+        }
         
     }
 

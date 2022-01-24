@@ -25,7 +25,9 @@ export default class Keyboard extends Component {
             word : '',
             wordArr : [],
             guess : '',
-            guessArr : []
+            guessArr : [],
+            correct : [],
+            contains : []
         }
     }
 
@@ -44,7 +46,7 @@ export default class Keyboard extends Component {
             //console.log(arrayOfWords)
             let rand = Math.floor(Math.random() * arrayOfWords.length);
             let word = arrayOfWords[rand]
-            //console.log(word)
+            console.log(word)
             let wordArr = word.split('')
             
            this.setState((state) => ({
@@ -83,8 +85,23 @@ export default class Keyboard extends Component {
         let guessArr = guess.split('')
         console.log(guessArr)
         for(let i = 0; i< wordArr.length; i++) {
+
             if (wordArr[i] === guessArr[i]) {
                 console.log('word contains ' + wordArr[i])
+
+                this.setState((state) => ({
+                    correct : [...state.correct, i]
+                }))
+
+                
+            } else if (wordArr.includes(guessArr[i])) {
+                this.setState((state) => ({
+                    correct : [...state.correct, -2]
+                }))
+            } else {
+                this.setState((state) =>({
+                    correct : [...state.correct, -1]
+                }))
             }
         }
             
@@ -176,7 +193,7 @@ export default class Keyboard extends Component {
         return (
             <>
             <div class="board-container">
-                <Gameboard keyPress={this.state.key} row={this.state.row} tile={this.state.tile} word={this.state.word} wordArr={this.state.wordArr}/>
+                <Gameboard keyPress={this.state.key} row={this.state.row} tile={this.state.tile} correct={this.state.correct}/>
             </div>
             <div>{this.generateRows()}</div>
             </>
