@@ -135,9 +135,11 @@ export default class Keyboard extends Component {
            }
                 
             currentKey = ''
+            guess = guess.slice(0, -1)
             
             this.setState((state) => ({
-                del : true
+                del : true,
+                guess : guess
             }))
             
 
