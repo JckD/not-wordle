@@ -127,37 +127,20 @@ export default class Keyboard extends Component {
 
         if(key === 'Enter') {
    
-           
-            
-            
-          
-           // if (guess.length == 5) {
-                currentKey = '';
-                currentTile = -1;
-                console.log(this.state.guess)
-                if( row  == 6) {
-                    this.gameOver()
-                } else {
-                   row = row + 1; 
+            currentKey = '';
+            currentTile = -1;
+
+            //check if out of lives
+            if( row  === 6) {
+                this.gameOver()
+            } else {
+                row = row + 1; 
             }
                 
+            this.compareWords(row)
 
-                this.compareWords(row)
-                console.log('new row')
-
-                if(this.state.row === row) {
-                     this.setState((state) => ({
-                    correct : [], 
-                    guess : ''
-                }))}
-               
-           // }   
-            
-            
             this.setState((state) => ({
                 del : false,
-                // correct : [],
-                // guess : ''
             }))
 
         } else if (key === 'DEL') {
@@ -176,9 +159,6 @@ export default class Keyboard extends Component {
 
         } else {
 
-            
-
-   
             if(this.state.del) {
                 currentTile--
 
@@ -188,7 +168,6 @@ export default class Keyboard extends Component {
             }
 
             currentKey = key;
-            
             
             currentTile += 1
             if (guess.length > 5) {
@@ -211,21 +190,15 @@ export default class Keyboard extends Component {
         } else if (currentTile > 4) {
             currentTile = 4
         }
-
-        
+  
         this.setState((state) => ({
             
             key : currentKey,
             tile : currentTile,
             row : row,
             guess : guess
-        }), () => console.log('row:' + this.state.row + '  '+row))
+        }),)
 
-        if(this.state.row === row + 1) {
-            console.log('idk')
-            }
-
-     
     }
 
 
