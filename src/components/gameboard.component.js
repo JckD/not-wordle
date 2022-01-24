@@ -96,7 +96,9 @@ export default class Gameboard extends Component {
                 currentRow.item(0).children[i].classList.add('correct')
             } else if (this.props.correct[i] === -2) {
                 currentRow.item(0).children[i].classList.add('almost')
-            }
+            } else (
+                currentRow.item(0).children[i].classList.add('wrong')
+            )
         }
         
     }
