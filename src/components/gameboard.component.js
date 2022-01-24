@@ -53,10 +53,8 @@ export default class Gameboard extends Component {
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
 
         let correct = this.props.correct
-        console.log(this.props.tile)
 
         if(this.props.correct.length > 0) {
-          //  currentTile.item(0).classList.add('correct')
             this.updateRow()
         }
 
@@ -66,10 +64,8 @@ export default class Gameboard extends Component {
         if (key == null) {
             key = '0'
         }
-       // console.log(currentTile.item(0).children[0])
 
         if (currentTile.item(0) != null) {
-            console.log(currentTile.item(0))
             currentTile.item(0).children[0].innerHTML = key 
         }
        

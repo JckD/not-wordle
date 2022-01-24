@@ -83,14 +83,14 @@ export default class Keyboard extends Component {
         let guess = this.state.guess
 
         let guessArr = guess.split('')
-        console.log(guessArr)
+        //console.log(guessArr)
 
        
         
             for(let i = 0; i< wordArr.length; i++) {
 
                 if (wordArr[i] === guessArr[i]) {
-                    console.log('word contains ' + wordArr[i])
+                   // console.log('word contains ' + wordArr[i])
 
                     this.setState((state) => ({
                         correct : [...state.correct, i]
@@ -127,21 +127,27 @@ export default class Keyboard extends Component {
 
         if(key === 'Enter') {
    
-            currentKey = '';
-            currentTile = -1;
+            
 
-            //check if out of lives
-            if( row  === 6) {
-                this.gameOver()
-            } else {
-                row = row + 1; 
+            if(guess.length === 5) {
+                currentKey = '';
+                currentTile = -1;
+
+                //check if out of lives
+                if( row  === 6) {
+                    this.gameOver()
+                } else {
+                    row = row + 1; 
+                }
+                    
+                this.compareWords(row)
+
+                this.setState((state) => ({
+                    del : false,
+                }))
             }
-                
-            this.compareWords(row)
 
-            this.setState((state) => ({
-                del : false,
-            }))
+            
 
         } else if (key === 'DEL') {
            if (this.state.del) {
@@ -208,8 +214,6 @@ export default class Keyboard extends Component {
 
 
     render() {
-        let keyPressed = this.state.key
-       // console.log(keyPressed)
         return (
             <>
             <div class="board-container">
