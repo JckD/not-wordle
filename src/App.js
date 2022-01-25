@@ -13,7 +13,7 @@ function App() {
         </header>
         
 
-        <div class="keyboard">
+        <div  class="keyboard">
             <Keyboard/>
              
         </div>

@@ -14,8 +14,8 @@ export default class Keyboard extends Component {
         super(props)
 
         this.generateRows = this.generateRows.bind(this);
-        this.generateLetters = this.generateLetters.bind(this);
         this.keyPress = this.keyPress.bind(this);
+        this.updateKeyboard = this.updateKeyborad.bind(this);
 
         this.state = {
             row : 0,    
@@ -27,7 +27,8 @@ export default class Keyboard extends Component {
             guess : '',
             guessArr : [],
             correct : [],
-            contains : []
+            lettersChosen : []
+            
         }
     }
 
@@ -68,14 +69,66 @@ export default class Keyboard extends Component {
         let rows = [firstLineArr, secondLineArr, thirdLineArr]
 
         return rows.map(function(row, i){
-            return <div  key={i} className='columns is-variable is-1'> 
+            return <div key={i} className='columns is-variable is-1'> 
                     {row.map(function(letters, j){
                     return <Key key={j} index={j} letter={letters} keyPress={() => pressKey(letters)}/>
                     })}
                   </div>
         })
+    }
+
+    updateKeyborad(correct, guess) {
+        this.setState((state) => ({
+            lettersChosen : [...state.lettersChosen, guess]
+        }), () => {
+
+            let keyboard = document.getElementsByClassName('button')
+            
+            // row , col , letter
+           // console.log(keyboard)
+           let guessArr = guess.split('')
+           let correctLetters = ''
 
 
+            correct.forEach(element => {
+                console.log(element)
+                if (element >= 0) {
+                    correctLetters = correctLetters + guessArr[element]
+                }
+            });
+
+            console.log(correctLetters)
+
+            for(let i = 0; i < keyboard.length; i++) {
+                //console.log(keyboard[i])
+                if(correct[i] >= 0 && correct[i] <= 4){
+                    console.log(correct[i])
+                    
+                }
+       
+                if (guess.includes(keyboard[i].innerHTML)) {
+                    //console.log(keyboard[i].innerHTML + ' has been picked')
+                    keyboard[i].classList.remove('is-light')
+                    keyboard[i].classList.remove('is-warning')
+                   // console.log(i)
+                    //console.log(correct)
+                   // console.log(correct[i])
+                    if (correctLetters.includes(keyboard[i].innerHTML)) {
+                        console.log('green')
+                        keyboard[i].classList.add('is-success')
+                    } else if (this.state.word.includes(keyboard[i].innerHTML)) {
+                        keyboard[i].classList.add('is-warning')
+                    } else {
+                        keyboard[i].classList.add('is-dark')
+                    }
+                }
+               
+            }
+        })
+
+       // console.log(correct)
+       
+      // console.log(guess)
     }
 
     compareWords(row) {
@@ -83,30 +136,36 @@ export default class Keyboard extends Component {
         let guess = this.state.guess
 
         let guessArr = guess.split('')
+        let correct  = [];
         //console.log(guessArr)
-
-       
-        
             for(let i = 0; i< wordArr.length; i++) {
 
                 if (wordArr[i] === guessArr[i]) {
-                   // console.log('word contains ' + wordArr[i])
 
-                    this.setState((state) => ({
-                        correct : [...state.correct, i]
-                    }))
+                    // this.setState((state) => ({
+                    //     correct : [...state.correct, i]
+                    // }))
 
-                    
+                    correct.push(i)
+ 
                 } else if (wordArr.includes(guessArr[i])) {
-                    this.setState((state) => ({
-                        correct : [...state.correct, -2]
-                    }))
+                    // this.setState((state) => ({
+                    //     correct : [...state.correct, -2]
+                    // }))
+                    correct.push(-2)
                 } else {
-                    this.setState((state) =>({
-                        correct : [...state.correct, -1]
-                    }))
+                    // this.setState((state) =>({
+                    //     correct : [...state.correct, -1]
+                    // }))
+                    correct.push(-1)
                 }
             }
+
+           
+            this.updateKeyborad(correct, guess)
+            this.setState((state) => ({
+                correct : correct
+            }),)
       
         
 
@@ -208,18 +267,13 @@ export default class Keyboard extends Component {
     }
 
 
-    generateLetters() {
-        return <p>hi</p>
-    }
-
-
     render() {
         return (
             <>
             <div class="board-container">
                 <Gameboard keyPress={this.state.key} row={this.state.row} tile={this.state.tile} correct={this.state.correct}/>
             </div>
-            <div>{this.generateRows()}</div>
+            <div id='keyboard'>{this.generateRows()}</div>
             </>
             
             
