@@ -146,6 +146,11 @@ export default class Keyboard extends Component {
 
     gameOver() {
         console.log('gameover')
+
+
+        let score = this.state.row
+
+        
     }
 
     keyPress(key){
