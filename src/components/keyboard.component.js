@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Gameboard from './gameboard.component'
+import Scorecard from './scorecard.component';
 
 
 const Key = props => (
@@ -15,7 +16,7 @@ export default class Keyboard extends Component {
 
         this.generateRows = this.generateRows.bind(this);
         this.keyPress = this.keyPress.bind(this);
-        this.updateKeyboard = this.updateKeyborad.bind(this);
+        this.updateKeyboard = this.updateKeyboard.bind(this);
 
         this.state = {
             row : 0,    
@@ -27,12 +28,19 @@ export default class Keyboard extends Component {
             guess : '',
             guessArr : [],
             correct : [],
-            lettersChosen : []  
+            lettersChosen : [],
+            gameOver : false
         }
     }
 
+
+
     componentDidMount() {
         this.pickWord()
+    }
+
+    newGame() {
+        window.location.reload()
     }
 
     pickWord() {
@@ -72,7 +80,7 @@ export default class Keyboard extends Component {
         })
     }
 
-    updateKeyborad(correct, guess) {
+    updateKeyboard(correct, guess) {
         this.setState((state) => ({
             lettersChosen : [...state.lettersChosen, guess]
         }), () => {
@@ -99,7 +107,6 @@ export default class Keyboard extends Component {
                     keyboard[i].classList.remove('is-warning')
                    
                     if (correctLetters.includes(keyboard[i].innerHTML)) {
-                        console.log('green')
                         keyboard[i].classList.add('is-success')
                     } else if (this.state.word.includes(keyboard[i].innerHTML)) {
                         keyboard[i].classList.add('is-warning')
@@ -132,13 +139,15 @@ export default class Keyboard extends Component {
                 }
             }
     
-            this.updateKeyborad(correct, guess)
+            this.updateKeyboard(correct, guess)
             this.setState((state) => ({
                 correct : correct
             }),() => {
 
                 if(!correct.includes(-1) && !correct.includes(-2)) {
-                    this.gameOver()
+                    this.setState((state) => ({
+                        gameOver : true
+                    }))
                 }
             })
 
@@ -147,10 +156,19 @@ export default class Keyboard extends Component {
     gameOver() {
         console.log('gameover')
 
-
-        let score = this.state.row
-
+        // Turn the rest of the word to lowser case and pass it to the scorecard
+        let startingLetter = this.state.word.slice(0, 1)
+        let word = this.state.word.slice(1, this.state.word.length).toLowerCase();
+        word = startingLetter + word    
         
+
+
+        let score = 7 - this.state.row;
+
+        if (this.state.gameOver) {
+            return <Scorecard score={score} word={word} newGame={() => this.newGame()}/>
+        }
+
     }
 
     keyPress(key){
@@ -169,7 +187,9 @@ export default class Keyboard extends Component {
                 currentTile = -1;
 
                 if( row  === 6) {
-                    this.gameOver()
+                    this.setState((state) => ({
+                        gameOver : true
+                    }))
                 } else {
                     row = row + 1; 
                 }
@@ -241,11 +261,13 @@ export default class Keyboard extends Component {
     }
 
 
+
     render() {
         return (
             <>
             <div class="board-container">
                 <Gameboard keyPress={this.state.key} row={this.state.row} tile={this.state.tile} correct={this.state.correct}/>
+                {this.gameOver()}
             </div>
             <div id='keyboard'>{this.generateRows()}</div>
             </>
