@@ -3,7 +3,6 @@ import React from "react"
 export default function Scorecard(props) {
 
    function closeModal() {
-        let modal = document.getElementsByClassName('modal is-active')
       
       if(document.getElementById('modal')) {
           document.getElementById('modal').classList.toggle('is-active')
