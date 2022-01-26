@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 
-const Key = props => (
-    <div className='column'>
-        <button className='button is-light'>{props.letter}</button>
-    </div>
-)
+// const Key = props => (
+//     <div className='column'>
+//         <button className='button is-light'>{props.letter}</button>
+//     </div>
+// )
 
 export default class Gameboard extends Component {
 
@@ -29,8 +29,8 @@ export default class Gameboard extends Component {
 
     generateRows() {
      
-        const width = Array.apply(null, Array(this.state.wordLength)).map(function () {})
-        const length = Array.apply(null, Array(this.state.lives)).map(function () {})
+        const width = Array.apply(null, Array(this.state.wordLength)).map(function () {return 0})
+        const length = Array.apply(null, Array(this.state.lives)).map(function () {return 0})
         width.fill('', 0, this.state.wordLength)
         length.fill(width, 0, this.state.lives)
         return length.map((row, i) => {
@@ -52,7 +52,6 @@ export default class Gameboard extends Component {
         
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
 
-        let correct = this.props.correct
 
         if(this.props.correct.length > 0) {
             this.updateRow()
