@@ -72,7 +72,7 @@ export default class Keyboard extends Component {
         let rows = [firstLineArr, secondLineArr, thirdLineArr]
 
         return rows.map(function(row, i){
-            return <div key={i} className='columns is-variable is-1'> 
+            return <div key={i} className='columns is-variable is-1 is-mobile'> 
                     {row.map(function(letters, j){
                     return <Key key={j} index={j} letter={letters} keyPress={() => pressKey(letters)}/>
                     })}
