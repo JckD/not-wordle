@@ -92,13 +92,13 @@ export default class Keyboard extends Component {
 
 
             correct.forEach(element => {
-                console.log(element)
+                //console.log(element)
                 if (element >= 0) {
                     correctLetters = correctLetters + guessArr[element]
                 }
             });
 
-            console.log(correctLetters)
+           // console.log(correctLetters)
 
             for(let i = 0; i < keyboard.length; i++) {
                
@@ -154,7 +154,7 @@ export default class Keyboard extends Component {
     }
 
     gameOver() {
-        console.log('gameover')
+        console.log(this.state.gameOver)
 
         // Turn the rest of the word to lowser case and pass it to the scorecard
         let startingLetter = this.state.word.slice(0, 1)
@@ -164,6 +164,7 @@ export default class Keyboard extends Component {
 
 
         let score = 7 - this.state.row;
+        console.log(this.state.row)
 
         if (this.state.gameOver) {
             return <Scorecard score={score} word={word} newGame={() => this.newGame()}/>
@@ -186,7 +187,7 @@ export default class Keyboard extends Component {
                 currentKey = '';
                 currentTile = -1;
 
-                if( row  === 6) {
+                if( row === 6) {
                     this.setState((state) => ({
                         gameOver : true
                     }))
