@@ -5,7 +5,7 @@ import Scorecard from './scorecard.component';
 
 const Key = props => (
     <div className='column'>
-        <button className='button is-light'onClick={props.keyPress}>{props.letter}</button>
+        <button className='button is-light'onClick={props.keyPress} onKeyPress={props.keyPress} >{props.letter}</button>
     </div>
 )
 
@@ -169,6 +169,11 @@ export default class Keyboard extends Component {
         if (this.state.gameOver) {
             return <Scorecard score={score} word={word} newGame={() => this.newGame()}/>
         }
+
+    }
+
+    keyboardInput() {
+
 
     }
 
