@@ -50,10 +50,13 @@ export default class Keyboard extends Component {
         fetch(words)
         .then(res => res.text())
         .then(text => {
-            const arrayOfWords = text.split(' ')
+            const arrayOfWords = text.split('\n')
+           
             let rand = Math.floor(Math.random() * arrayOfWords.length);
-            let word = arrayOfWords[rand]
+            let word = arrayOfWords[rand].trim()
+            console.log(word)
             let wordArr = word.split('')
+            console.log(wordArr)
             
            this.setState((state) => ({
                 word : word,
@@ -150,6 +153,7 @@ export default class Keyboard extends Component {
                         gameOver : true
                     }))
                 }
+                console.log(this.state.gameOver)
             })
 
     }
