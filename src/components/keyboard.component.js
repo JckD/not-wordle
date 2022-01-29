@@ -5,7 +5,7 @@ import Scorecard from './scorecard.component';
 
 const Key = props => (
     <div className='column'>
-        <button className='button is-light'onClick={props.keyPress} onKeyPress={props.keyPress} >{props.letter}</button>
+        <button className='button is-light'onClick={props.keyPress} >{props.letter}</button>
     </div>
 )
 
@@ -37,6 +37,7 @@ export default class Keyboard extends Component {
 
     componentDidMount() {
         this.pickWord()
+        this.keyboardInput()
     }
 
     newGame() {
@@ -175,6 +176,21 @@ export default class Keyboard extends Component {
     keyboardInput() {
 
 
+        document.addEventListener('keydown', (e) => {
+
+           
+           e.preventDefault() 
+           if (e.code.includes('Key') || e.code === 'Backspace') {
+                this.keyPress(e.key.toUpperCase())
+           } else if (e.key === 'Enter') {
+               this.keyPress(e.code)
+           }
+
+           
+            
+        })
+
+        
     }
 
     keyPress(key){
@@ -184,14 +200,19 @@ export default class Keyboard extends Component {
        let currentTile = this.state.tile
        let guess = this.state.guess
 
-
+        if(key === 'ENTER') {
+            key = 'Enter'
+           // console.log('enterkey')
+        }
         if(key === 'Enter') {
    
-
+           // console.log(key)
+           // check if guess is full
             if(guess.length === 5) {
                 currentKey = '';
                 currentTile = -1;
-
+                
+                //check if last guess is used
                 if( row === 6) {
                     this.setState((state) => ({
                         gameOver : true
@@ -208,7 +229,7 @@ export default class Keyboard extends Component {
             }
 
 
-        } else if (key === 'DEL') {
+        } else if (key === 'DEL' || key === 'BACKSPACE') {
            if (this.state.del) {
                currentTile --
            }
@@ -233,7 +254,7 @@ export default class Keyboard extends Component {
             }
 
             currentKey = key;
-            
+            console.log(key)
             currentTile += 1
             if (guess.length > 5) {
                 guess = guess.substring(guess.length-1, guess.length)
