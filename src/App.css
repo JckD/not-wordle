@@ -53,7 +53,7 @@ html {
 
 
 
-.scorecard {
+.modal-div {
   background-color:#363c44;
 
   width: 450px;
@@ -62,3 +62,4 @@ html {
   border-radius: 10px;
   padding: 25px;
 }
+

@@ -15,7 +15,7 @@ export default function Scorecard(props) {
         <div className="modal is-active" id="modal">
             <div className="modal-background" onClick={() => closeModal()}></div>
 
-            <div className="modal-content scorecard">
+            <div className="modal-content modal-div">
                 <div className="level-right">
                     <button className="modal-close" aria-label="close"  onClick={() => closeModal()}></button>
                 </div>
