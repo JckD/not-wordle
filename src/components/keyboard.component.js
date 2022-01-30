@@ -54,9 +54,7 @@ export default class Keyboard extends Component {
            
             let rand = Math.floor(Math.random() * arrayOfWords.length);
             let word = arrayOfWords[rand].trim()
-            console.log(word)
             let wordArr = word.split('')
-            console.log(wordArr)
             
            this.setState((state) => ({
                 word : word,
@@ -153,7 +151,6 @@ export default class Keyboard extends Component {
                         gameOver : true
                     }))
                 }
-                console.log(this.state.gameOver)
             })
 
     }
@@ -169,7 +166,7 @@ export default class Keyboard extends Component {
 
 
         let score = 7 - this.state.row;
-        console.log(this.state.row)
+        //console.log(this.state.row)
 
         if (this.state.gameOver) {
             return <Scorecard score={score} word={word} newGame={() => this.newGame()}/>
@@ -206,72 +203,77 @@ export default class Keyboard extends Component {
 
         if(key === 'ENTER') {
             key = 'Enter'
-           // console.log('enterkey')
         }
-        if(key === 'Enter') {
-   
-           // console.log(key)
-           // check if guess is full
-            if(guess.length === 5) {
-                currentKey = '';
-                currentTile = -1;
-                
-                //check if last guess is used
-                if( row === 6) {
-                    this.setState((state) => ({
-                        gameOver : true
-                    }))
-                } else {
-                    row = row + 1; 
-                }
-                    
-                this.compareWords(row)
-
-                this.setState((state) => ({
-                    del : false,
-                }))
-            }
-
-
-        } else if (key === 'DEL' || key === 'BACKSPACE') {
-           if (this.state.del) {
-               currentTile --
-           }
-                
-            currentKey = ''
-            guess = guess.slice(0, -1)
+        console.log(this.state.guess.length)
+        if (1) {
+            if(key === 'Enter') {
             
-            this.setState((state) => ({
-                del : true,
-                guess : guess
-            }))
-            
+                    // console.log(key)
+                    // check if guess is full
+                        if(guess.length === 5) {
+                            currentKey = '';
+                            currentTile = -1;
+                            
+                            //check if last guess is used
+                            if( row === 6) {
+                                this.setState((state) => ({
+                                    gameOver : true
+                                }))
+                            } else {
+                                row = row + 1; 
+                            }
+                                
+                            this.compareWords(row)
 
-        } else {
+                            this.setState((state) => ({
+                                del : false,
+                            }))
+                        }
 
-            if(this.state.del) {
-                currentTile--
 
-                if (currentTile < 0) {
-                    currentTile = -1
-                }
-            }
+                    } else if (key === 'DEL' || key === 'BACKSPACE') {
+                    if (this.state.del) {
+                        currentTile --
+                    }
+                            
+                        currentKey = ''
+                        guess = guess.slice(0, -1)
+                        
+                        this.setState((state) => ({
+                            del : true,
+                            guess : guess
+                        }))
+                        
 
-            currentKey = key;
-            console.log(key)
-            currentTile += 1
-            if (guess.length > 5) {
-                guess = guess.substring(guess.length-1, guess.length)
-                this.setState((state) => ({
-                    correct: []
-                }))
-            }
-            guess = guess + key
+                    } else {
 
-            this.setState((state) => ({
-                del : false
-            }))
+                        if(this.state.del) {
+                            currentTile--
+
+                            if (currentTile < 0) {
+                                currentTile = -1
+                            }
+                        }
+
+                        currentKey = key;
+                        //console.log(key)
+                        currentTile += 1
+                        if (guess.length > 5) {
+                            guess = guess.substring(guess.length-1, guess.length)
+                            this.setState((state) => ({
+                                correct: []
+                            }))
+                        }
+                        guess = guess + key
+
+                        this.setState((state) => ({
+                            del : false
+                        }))
+                    }
         }
+        
+        
+        
 
         if(currentTile < 0) {
             
