@@ -156,7 +156,7 @@ export default class Keyboard extends Component {
     }
 
     gameOver() {
-        console.log(this.state.gameOver)
+        //console.log(this.state.gameOver)
 
         // Turn the rest of the word to lowser case and pass it to the scorecard
         let startingLetter = this.state.word.slice(0, 1)
