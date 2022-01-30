@@ -33,6 +33,7 @@ export default function AppHeader (props) {
                     Not-Wordle by <a href="https://www.github.com/JckD">JckD</a> in tribute to the original <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a>.
                 </p>
                 <p className="has-text-white">Made using React, Bulma and deployed on Netlify.</p>
+                <br/>
                 <p className="has-text-white">Definetly don't inspect element and look at the console 👀</p>
             </div>
         </div>
