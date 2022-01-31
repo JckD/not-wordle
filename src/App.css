@@ -5,6 +5,7 @@ html {
 
 .header {
  
+  border-bottom: 1px solid grey;
 }
 
 .container {

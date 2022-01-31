@@ -14,14 +14,16 @@ export default function AppHeader (props) {
     
     return (
         <>
+
         <div className="level-item ">
             <h1 className="title is-2 $title-color">NOT WORDLE</h1> 
+       
         </div>
-        <div className='level-right'>
+         <div className='level-right'>
             <button className='button is-dark' onClick={() => closeModal()}>
                 ?
             </button>
-        </div>
+        </div> 
         <div className="modal" id="modal">
             <div className="modal-background" onClick={() => closeModal()}></div>
             <div className="modal-content modal-div">
