@@ -4,15 +4,15 @@ export default function Scorecard(props) {
 
    function closeModal() {
       
-      if(document.getElementById('modal')) {
-          document.getElementById('modal').classList.toggle('is-active')
+      if(document.getElementById('score-modal')) {
+          document.getElementById('score-modal').classList.toggle('is-active')
 
       }  
     }
 
     
     return (
-        <div className="modal is-active" id="modal">
+        <div className="modal is-active" id="score-modal">
             <div className="modal-background" onClick={() => closeModal()}></div>
 
             <div className="modal-content modal-div">
