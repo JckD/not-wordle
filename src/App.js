@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
      <div className='container'>
-        <header className="level header">
+        <header className="level header is-mobile">
             <AppHeader />
         </header>
         
