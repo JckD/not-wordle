@@ -47,8 +47,6 @@ export default class Gameboard extends Component {
     }
 
     updateTile(){
-
-        
         
         let currentTile = document.getElementsByName('row ' + this.props.row + ' tile ' + this.props.tile)
 
